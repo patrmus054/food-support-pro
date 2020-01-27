@@ -1,5 +1,6 @@
 package com.example.napomocinzynierom.ui.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.napomocinzynierom.R
 import com.example.napomocinzynierom.data.remote.Magazine
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_list_home.*
 
 class HomeFragment : Fragment() {
 
@@ -31,6 +33,9 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?
     ): View? {homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+
+
+
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -48,5 +53,7 @@ class HomeFragment : Fragment() {
             listAdapter.setList(it)
         })
         homeViewModel.getAllMagazines()
+
+
     }
 }

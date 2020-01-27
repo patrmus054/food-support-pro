@@ -1,46 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:background="@drawable/layout_bg"
-    android:padding="@dimen/padding_normal"
-    app:layout_constraintCircleRadius="6sp"
+<layout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/tv_home_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="18sp"/>
+    <data>
+        <import type="android.view.View"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_home_title"
-        app:layout_constraintCircleRadius="6sp">
+        <variable
+            name="magazine"
+            type="com.example.napomocinzynierom.data.remote.Magazine"/>
+        <variable
+            name="listener"
+            type="com.example.napomocinzynierom.ui.home.MagazineListener"
+            />
+    </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_magazine"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/layout_bg"
+        android:padding="@dimen/padding_normal"
+        app:layout_constraintCircleRadius="6sp"
+        android:onClick="@{() -> listener.onMagazineSelected(magazine)}">
 
         <TextView
-            android:id="@+id/tv_home_issn"
-            android:layout_width="125dp"
+            android:id="@+id/tv_home_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="15dp"
-            android:inputType="textMultiLine" />
+            android:layout_margin="@dimen/padding_normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/tv_home_points"
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="15dp"
-            android:inputType="textMultiLine" />
-    </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_title"
+            app:layout_constraintCircleRadius="6sp">
+
+
+            <TextView
+                android:id="@+id/tv_home_issn"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"
+                android:inputType="textMultiLine" />
+
+            <ImageView
+                android:id="@+id/iv_save"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/tv_home_points"
+                android:layout_toLeftOf="@+id/tv_home_points"
+                android:layout_toEndOf="@+id/tv_home_issn"
+                android:layout_toRightOf="@+id/tv_home_issn"
+                android:src="@drawable/ic_save_black_24dp"
+                android:onClick="@{() -> listener.onImgSelected(view)}"/>
+            <TextView
+                android:id="@+id/tv_home_points"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"
+                android:inputType="textMultiLine" />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

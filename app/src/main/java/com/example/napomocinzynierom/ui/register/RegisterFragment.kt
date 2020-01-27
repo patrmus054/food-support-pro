@@ -1,4 +1,4 @@
-package com.example.napomocinzynierom.register
+package com.example.napomocinzynierom.ui.register
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle

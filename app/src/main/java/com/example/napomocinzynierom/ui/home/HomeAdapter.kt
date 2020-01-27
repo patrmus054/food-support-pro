@@ -1,15 +1,17 @@
 package com.example.napomocinzynierom.ui.home
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napomocinzynierom.R
 import com.example.napomocinzynierom.data.remote.Magazine
-import com.example.napomocinzynierom.ui.home.HomeAdapter.Companion.TAG
+import com.example.napomocinzynierom.databinding.ItemListHomeBinding
 
 class HomeAdapter(private val list: MutableList<Magazine>)
     :RecyclerView.Adapter<HomeViewHolder>(){
@@ -20,16 +22,30 @@ class HomeAdapter(private val list: MutableList<Magazine>)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return HomeViewHolder(inflater, parent)
+        val binding = DataBindingUtil.inflate<ItemListHomeBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.item_list_home, parent, false)
+
+        return HomeViewHolder(binding)
     }
 
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val magazine: Magazine = list[position]
-        holder.bind(magazine)
+        holder.bind(magazine, object : MagazineListener{
+            override fun onMagazineSelected(magazine: Magazine) {
+                Log.w(TAG, magazine.title1 + " " + magazine.points)
+
+            }
+
+            override fun onImgSelected() {
+                //holder.iv_save
+            }
+        })
     }
+
+
     fun setList(newList: List<Magazine>){
         list.clear()
         list.addAll(newList)
@@ -37,9 +53,7 @@ class HomeAdapter(private val list: MutableList<Magazine>)
     }
 }
 
-class HomeViewHolder(inflater: LayoutInflater, parent: ViewGroup):
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.item_list_home, parent, false)){
-
+class HomeViewHolder(private val binding: ItemListHomeBinding) : RecyclerView.ViewHolder(binding.root) {
     private var mTitleView: TextView? = null
     private var mIssn: TextView? = null
     private var mPoints: TextView? = null
@@ -49,13 +63,22 @@ class HomeViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         mIssn = itemView.findViewById(R.id.tv_home_issn)
         mPoints = itemView.findViewById(R.id.tv_home_points)
     }
-    fun bind(magazine : Magazine){
-        mTitleView?.text = magazine.title1
-        mIssn?.text = magazine.issn
-        Log.w(TAG,magazine.points.toString() + "${magazine.points}")
-        var sum: Int = 0
-        magazine.points.forEach { p -> sum = sum + p.value}
-        mPoints?.text = sum.toString()
 
+    fun bind(mMagazine: Magazine, magazineListener: MagazineListener) {
+        with(binding)
+        {
+            magazine = mMagazine
+            listener = magazineListener
+            mTitleView?.text = mMagazine.title1
+            mIssn?.text = mMagazine.issn
+            var sum: Int = 0
+            mMagazine.points.forEach { p -> sum = sum + p.value}
+            mPoints?.text = sum.toString()
+            executePendingBindings()
+        }
     }
+}
+interface MagazineListener {
+    fun onMagazineSelected(mMagazine: Magazine)
+    fun onImgSelected()
 }

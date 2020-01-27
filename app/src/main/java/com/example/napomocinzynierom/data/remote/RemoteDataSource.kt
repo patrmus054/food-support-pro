@@ -85,7 +85,7 @@ class RemoteDataSource : DataSource {
             Log.w(TAG, user.message)
             if(user.message.equals("Auth success")){
                 Log.w(TAG, "api działa")
-                var loggedInUser = LoggedInUser(user.data!!.id, "test Name")
+                var loggedInUser = LoggedInUser(user.data!!.id, user.data!!.id.toString())
                 return Result.Success(loggedInUser)
             }
 
