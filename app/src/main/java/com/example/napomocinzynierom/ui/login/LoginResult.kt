@@ -1,4 +1,4 @@
-package com.example.napomocinzynierom.login.ui.login
+package com.example.napomocinzynierom.ui.login
 
 /**
  * Authentication result : success (user details) or error message.

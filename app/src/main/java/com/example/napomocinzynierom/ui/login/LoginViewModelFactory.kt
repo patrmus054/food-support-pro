@@ -1,9 +1,9 @@
-package com.example.napomocinzynierom.login.ui.login
+package com.example.napomocinzynierom.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.napomocinzynierom.login.data.LoginDataSource
-import com.example.napomocinzynierom.login.data.LoginRepository
+import com.example.napomocinzynierom.Repository
+import com.example.napomocinzynierom.data.remote.RemoteDataSource
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
@@ -14,11 +14,7 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(
-                loginRepository = LoginRepository(
-                    dataSource = LoginDataSource()
-                )
-            ) as T
+            return LoginViewModel(loginRepository = Repository(dataSource = RemoteDataSource())) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

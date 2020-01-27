@@ -1,15 +1,22 @@
-package com.example.napomocinzynierom.login.ui.login
+package com.example.napomocinzynierom.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import com.example.napomocinzynierom.R
-import com.example.napomocinzynierom.login.data.LoginRepository
-import com.example.napomocinzynierom.login.data.Result
+import com.example.napomocinzynierom.Repository
+import com.example.napomocinzynierom.Result
+import com.example.napomocinzynierom.data.local.LocalDataSource
+import com.example.napomocinzynierom.data.remote.RemoteDataSource
+import com.example.napomocinzynierom.ui.home.HomeViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val loginRepository: Repository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -17,16 +24,22 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
+    private var viewModelJob = Job()
+    private val corountineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    fun getData(): Repository = if(HomeViewModel.isIntrnet) Repository(RemoteDataSource()) else Repository(LocalDataSource())
 
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+    fun login(username: String, password: String) {
+        corountineScope.launch {
+            val result = getData().login(username, password)
+            if (result is Result.Success) {
+                _loginResult.value =
+                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            } else {
+                _loginResult.value = LoginResult(error = R.string.login_failed)
+            }
         }
+
+
     }
 
     fun loginDataChanged(username: String, password: String) {

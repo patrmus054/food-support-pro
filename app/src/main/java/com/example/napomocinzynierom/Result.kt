@@ -1,4 +1,4 @@
-package com.example.napomocinzynierom.login.data
+package com.example.napomocinzynierom
 
 /**
  * A generic class that holds a value with its loading status.

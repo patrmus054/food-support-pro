@@ -1,4 +1,4 @@
-package com.example.napomocinzynierom.login.ui.login
+package com.example.napomocinzynierom.ui.login
 
 /**
  * User details post authentication that is exposed to the UI
