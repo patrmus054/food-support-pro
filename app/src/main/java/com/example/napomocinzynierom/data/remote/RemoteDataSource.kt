@@ -6,8 +6,10 @@ import com.example.napomocinzynierom.Result
 import com.example.napomocinzynierom.ui.home.HomeViewModel
 import com.example.napomocinzynierom.ui.home.HomeViewModel.Companion.limit
 import com.example.napomocinzynierom.ui.home.HomeViewModel.Companion.page
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.await
+import retrofit2.awaitResponse
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.*
@@ -45,8 +47,19 @@ class RemoteDataSource : DataSource {
         page, limit, "", maxPoints, 0)
     override suspend fun getMagazinesByminPoints(minPoints: Int): List<Magazine> = getData(
         page, limit, "", minPoints, 0)
-    override suspend fun getMagazinesByPoints(maxPoints: Int, minPoints: Int): List<Magazine> = getData(
+    override suspend fun getMagazinesByPoints(maxPoints: Int, minPoints: Int): List<Magazine> = getDataBySearch(
         page, limit, "", maxPoints, minPoints)
+
+    internal suspend fun getDataBySearch(page: Int, limit: Int, s: String, maxPoints: Int, minPoints: Int): List<Magazine> {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(MagazineService::class.java)
+        val call = service.getCurrentMagazineData(page, 100, s, maxPoints, minPoints)
+        var result = call.await()
+        return result.magazines
+    }
 
     //login
     override suspend fun authoriseCredentials(login: String, password: String): LoginResponde = authoriseUser(login, password)
@@ -95,6 +108,59 @@ class RemoteDataSource : DataSource {
             return Result.Error(IOException("Error logging in", e))
         }
     }
+
+    override suspend fun getMagazineById(id: String): Magazine {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service = retrofit.create(MagazineService::class.java)
+            val call = service.getMagazineById(id)
+            return call.await()
+        }
+
+    override suspend fun getMagazinesByUserId(id: String): List<Magazine> {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(FavoriteService::class.java)
+        val call = service.getFavorite(id)
+        return call.await()
+    }
+
+    override suspend fun addMagazine(userID: String, magazineID: String): AddMagazineRespond {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(FavoriteService::class.java)
+        var newFavoriteMagazine = AddMagazineBody()
+        newFavoriteMagazine.userID = userID
+        newFavoriteMagazine.magazineId = magazineID
+        val call = service.addMagazines(newFavoriteMagazine)
+        return call.await()
+    }
+
+    override suspend fun addUser(login: String, password: String, firstName: String,lastName: String
+    ): SignUpResponde {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(SignUpService::class.java)
+        var signUpBody = SignUpBody()
+        signUpBody.newUserlogin = login
+        signUpBody.newUserpassword = password
+        signUpBody.newUserfirstName = firstName
+        signUpBody.newUserLastName = lastName
+
+
+        Log.w("loooooool", "Success create request")
+        val response = service.signNewUser(signUpBody).awaitResponse()
+        return response.body()!!
+    }
+
 
     override suspend fun logout() {
         // TODO: revoke authentication

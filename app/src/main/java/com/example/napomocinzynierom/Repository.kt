@@ -1,9 +1,7 @@
 package com.example.napomocinzynierom
 
 import com.example.napomocinzynierom.data.DataSource
-import com.example.napomocinzynierom.data.remote.LoginResponde
-import com.example.napomocinzynierom.data.remote.Magazine
-import com.example.napomocinzynierom.data.remote.LoggedInUser
+import com.example.napomocinzynierom.data.remote.*
 
 class Repository(private val dataSource: DataSource):
     DataSource {
@@ -21,7 +19,7 @@ class Repository(private val dataSource: DataSource):
     override suspend fun getMagazines(title: String, maxPoints: Int, minPoints: Int): List<Magazine> = dataSource.getMagazines(title, maxPoints, minPoints)
     override suspend fun getMagazinesByMaxPoints(maxPoints: Int): List<Magazine> = dataSource.getMagazinesByMaxPoints(maxPoints)
     override suspend fun getMagazinesByminPoints(minPoints: Int): List<Magazine> = dataSource.getMagazinesByminPoints(minPoints)
-    override suspend fun getMagazinesByPoints(maxPoints: Int, minPoints: Int): List<Magazine> = dataSource.getMagazines(maxPoints, minPoints)
+    override suspend fun getMagazinesByPoints(maxPoints: Int, minPoints: Int): List<Magazine> = dataSource.getMagazinesByPoints(maxPoints, minPoints)
 
     //login
     override suspend fun authoriseCredentials(login: String, password: String): LoginResponde {
@@ -40,6 +38,20 @@ class Repository(private val dataSource: DataSource):
             setLoggedInUser(result.data)
         }
         return result
+    }
+
+    override suspend fun getMagazineById(id: String): Magazine = dataSource.getMagazineById(id)
+    override suspend fun getMagazinesByUserId(id: String): List<Magazine> = dataSource.getMagazinesByUserId(id)
+
+
+    override suspend fun addMagazine(userID: String, magazineID: String): AddMagazineRespond = addMagazine(userID, magazineID)
+    override suspend fun addUser(
+        login: String,
+        password: String,
+        firstName: String,
+        lastName: String
+    ): SignUpResponde {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     var user: LoggedInUser? = null

@@ -7,25 +7,25 @@
         <import type="android.view.View"/>
 
         <variable
-            name="magazine"
+            name="magazineFavorites"
             type="com.example.napomocinzynierom.data.remote.Magazine"/>
         <variable
             name="listener"
-            type="com.example.napomocinzynierom.ui.home.MagazineListener"
+            type="com.example.napomocinzynierom.ui.favorite.FavoriteAdapter.MagazineFavoriteListener"
             />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_magazine"
+        android:id="@+id/item__favorite_magazine"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="@drawable/layout_bg"
         android:padding="@dimen/padding_normal"
         app:layout_constraintCircleRadius="6sp"
-        android:onClick="@{() -> listener.onMagazineSelected(magazine)}">
+        android:onClick="@{() -> listener.onMagazineSelected(magazineFavorites)}">
 
         <TextView
-            android:id="@+id/tv_home_title"
+            android:id="@+id/tv_favorite_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/padding_normal"
@@ -37,12 +37,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_home_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_favorite_title"
             app:layout_constraintCircleRadius="6sp">
 
 
             <TextView
-                android:id="@+id/tv_home_issn"
+                android:id="@+id/tv_favorite_issn"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -50,7 +50,7 @@
                 android:inputType="textMultiLine" />
 
             <TextView
-                android:id="@+id/tv_home_points"
+                android:id="@+id/tv_favorite_points"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

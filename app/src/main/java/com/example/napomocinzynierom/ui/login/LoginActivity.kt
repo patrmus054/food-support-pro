@@ -2,11 +2,7 @@ package com.example.napomocinzynierom.ui.login
 
 import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -15,14 +11,22 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.napomocinzynierom.MainActivity
 import com.example.napomocinzynierom.R
+import com.example.napomocinzynierom.ui.register.RegisterActivity
 
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
 
+    companion object{
+        var userID: String? = null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,7 +59,13 @@ class LoginActivity : AppCompatActivity() {
             loading.visibility = View.GONE
 
             if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
+                Toast.makeText(
+                    applicationContext,
+                    "Faild. Please Register",
+                    Toast.LENGTH_LONG
+                ).show()
+                val intentt = Intent(this, RegisterActivity::class.java)
+                startActivity(intentt)
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
@@ -101,6 +111,7 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.displayName
+        userID = model.displayName
         val intent = Intent(this, MainActivity::class.java)
         Toast.makeText(
             applicationContext,
@@ -109,6 +120,8 @@ class LoginActivity : AppCompatActivity() {
         ).show()
         startActivity(intent)
     }
+
+    fun userID():String = userID.toString()
 
     private fun showLoginFailed(@StringRes errorString: Int) {
 

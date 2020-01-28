@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_spec_categories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categories: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <TextView
+            android:id="@+id/tv_spec_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="id: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <TextView
+            android:id="@+id/tv_spec_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title1: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <TextView
+            android:id="@+id/tv_spec_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title2: "
+            android:textSize="14sp"
+            android:padding="10sp"
+            />
+        <TextView
+            android:id="@+id/tv_spec_issn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="issn: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <TextView
+            android:id="@+id/tv_spec_issn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="issn2: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <TextView
+            android:id="@+id/tv_spec_e_issn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="e_issn: "
+            android:textSize="14sp"
+            android:padding="10sp"
+            />
+        <TextView
+            android:id="@+id/tv_spec_e_issn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="e_issn2: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <TextView
+            android:id="@+id/tv_spec_points_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Points id: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <TextView
+            android:id="@+id/tv_spec_points_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Points year: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <TextView
+            android:id="@+id/tv_spec_points_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Points value: "
+            android:textSize="14sp"
+            android:padding="10sp"
+            />
+        <TextView
+            android:id="@+id/tv_spec_points_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="_v: "
+            android:textSize="14sp"
+            android:padding="10sp"/>
+        <Button
+            android:id="@+id/bt_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add to favorites"
+            android:textSize="16dp"
+            android:padding="16dp"/>
+    </LinearLayout>
+</layout>

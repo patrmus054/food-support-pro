@@ -3,15 +3,15 @@ package com.example.napomocinzynierom.ui.home
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napomocinzynierom.R
 import com.example.napomocinzynierom.data.remote.Magazine
 import com.example.napomocinzynierom.databinding.ItemListHomeBinding
+import com.example.napomocinzynierom.ui.home.HomeFragment.Companion.homeViewModel
+import kotlinx.android.synthetic.main.item_list_home.view.*
 
 class HomeAdapter(private val list: MutableList<Magazine>)
     :RecyclerView.Adapter<HomeViewHolder>(){
@@ -36,11 +36,8 @@ class HomeAdapter(private val list: MutableList<Magazine>)
         holder.bind(magazine, object : MagazineListener{
             override fun onMagazineSelected(magazine: Magazine) {
                 Log.w(TAG, magazine.title1 + " " + magazine.points)
-
-            }
-
-            override fun onImgSelected() {
-                //holder.iv_save
+                homeViewModel.setMagazine(magazine)
+                homeViewModel.callSignIn()
             }
         })
     }
@@ -80,5 +77,4 @@ class HomeViewHolder(private val binding: ItemListHomeBinding) : RecyclerView.Vi
 }
 interface MagazineListener {
     fun onMagazineSelected(mMagazine: Magazine)
-    fun onImgSelected()
 }

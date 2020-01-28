@@ -1,10 +1,8 @@
 package com.example.napomocinzynierom.data.local
 
 import com.example.napomocinzynierom.data.DataSource
-import com.example.napomocinzynierom.data.remote.LoginResponde
-import com.example.napomocinzynierom.data.remote.Magazine
 import com.example.napomocinzynierom.Result
-import com.example.napomocinzynierom.data.remote.LoggedInUser
+import com.example.napomocinzynierom.data.remote.*
 
 class LocalDataSource: DataSource {
     override suspend fun getMagazines(): List<Magazine> {
@@ -72,6 +70,27 @@ class LocalDataSource: DataSource {
     }
 
     override suspend fun login(username: String, password: String): Result<LoggedInUser> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override suspend fun getMagazineById(id: String): Magazine {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override suspend fun getMagazinesByUserId(id: String): List<Magazine> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override suspend fun addMagazine(userID: String, magazineID: String): AddMagazineRespond {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override suspend fun addUser(
+        login: String,
+        password: String,
+        firstName: String,
+        lastName: String
+    ): SignUpResponde {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
